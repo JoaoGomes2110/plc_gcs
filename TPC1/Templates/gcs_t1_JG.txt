@@ -1,0 +1,29 @@
+Identificação
+Nome: IntelliJ IDEA.
+URL do fabricante: https://www.jetbrains.com.
+Versão apreciada: 2018.2.4 (Community Edition).
+
+Requerimentos (fonte: página web do fabricante)
+
+- Requerimentos de sistema
+A versão em apreciação corre sobre Microsoft Windows, aceitando as versões 10/8/7/Vista/2003/XP (inclusive 64-bit) desse sistema operativo.
+Requer um mínimo de 2 GB RAM, recomendando 4 GB.
+Quanto à memória secundária, reclama 1,5 GB de espaço no disco rígido para se instalar, somados de pelo menos 1 GB para cache. Na resolução de ecrã, solicita um mínimo de 1024x768.
+
+- Requerimentos de software
+JRE 1.8 vem incluído com a distribuição do IntelliJ IDEA. Não é necessário instalar Java no computador para correr este IDE. Contudo, requer-se uma instalação independente de JDK para desenvolvimento Java.
+
+Descrição breve do produto (fonte: página web do fabricante)
+O IntelliJ IDEA está disponível em duas edições: Ultimate and Community. A versão Community, é um projeto open-source e gratuita, mas possui menos caraterísticas. A versão Ultimate é comercial, sendo anunciada pelo fabricante como disponibilizando um "leque excecional de ferramentas e caraterísticas".
+IntelliJ IDEA é um IDE (integrated development environment) orientado para desenvolvimento em Java, tendo como objetivo o desenvolvimento para a Web, aplicações móveis e empresariais.
+Mas não só: veja-se a vasta possibilidade de plug-in, como por exemplo AntLR.
+
+Apreciação da utilização e conclusões
+O lançamento de dicas no arranque do IDE é útil para insinuar, gradualmente, uma boa utilização da ferramenta. Estas dicas podem desligar-se no arranque e ser propositadamente chamadas via menu Help. A ajuda rediciona para uma página web, mas não se posiciona em função do contexto do código Java de partida. Há vídeos disponíveis na web para auxílio à configuração e utilização.
+
+Este IDE orienta-se por projetos. A interface é gráfica e interativa. A disposição por painéis revela diversos itens associados ao projeto em linha, como a lista de classes implementadas.
+O editor de código fonte vai fornecendo "Code Completion", pistas, sugestões, opções. É possível realizar saltos no código, por exemplo entre implementação e declaração. O código é colorido em função da sintaxe, destacando as coisas mais relevantes. Os erros e "suspeitas" de sintaxe também são realçados.
+
+Além de permitir compilar e correr, mostrando o output numa janela de consola, disponibiliza, como seria de esperar, um debugger.
+
+Numa apreciação subjetiva, a experiência de utilização é fluida e, de um modo geral, satisfatória.

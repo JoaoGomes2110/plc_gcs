@@ -1,0 +1,11 @@
+SA:
+Nome Empresa: TFJGCompany
+Cidade: Braga - Rua: Street
+Objetivo: Vender -- COMERCIO
+;
+Socio: Tiago -- 5000€ -- 50% -- ADMINISTRADOR
+Socio: Joao -- 5000€ -- 50% -- ADMINISTRADOR
+;
+Funcionario: RubenNeves -- F6123 -- 01/01/1997 -- TELEMOVEL: 912345678 & EMAIL: gowolves@hotmail.com -- GERENTE -- 01/01/2018
+.
+

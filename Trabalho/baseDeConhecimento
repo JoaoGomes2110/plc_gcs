@@ -1,0 +1,39 @@
+
+
+---Base de Conhecimento --
+
+Segmento -> Pequeno Citadino, Citadino, Utilitário, Sedan, Carrinha, Monovolume, Suv, Cabrio, Coupé, Comercial, SUV
+Marca  ->  Renault, Volvo, Audi, BMW, Mercedes, Vw, Seat 
+Modelo -> Nome  Cilindrada
+		  Renault(Captur,Clio,Espace, Kangoo,Laguna,Megane,Talisman,twingo,Zoe); Volvo (C30,V40,S80,XC90); Audi(A1,A2,A3,A4,A5,A6,A7,A8); BMW(															  
+		  Serie1,Serie3,Serie4,Serie5,Serie6,Serie7,X5,I8); Mercedes(Classe A,Classe B,Classe C,Classe E,ClasseS,Classe V,Classe M,Classe R), VW(POLO,GOLF,PASSAT,ARTEON,Carocha,Caddy,Lupo,T-Rock),SEAT(					  
+		  Altea,Ibiza,Leon,Toledo)
+
+
+Preço -> 
+
+Ano -> 1995 - 2018
+
+Combustivel ->  Diesel, Gasolina, Electrico, Hibrido
+
+Potencia -> 
+
+Caracteristicas Tecnicas -> Cor, Caixa, Portas, Tracção
+
+Cor -> Cinza Prata, Preto, Cinza Escuro, Branco, Azul, Vermelho, Amarelo
+
+Caixa -> Manual, Automatica, Semi-Automatico
+
+Portas -> 1 a 5
+
+Tracção -> Dianteira, Traseira, 4x4
+
+
+
+--- Estrutura de Dados ----- 
+
+(segmento,marca,modelo,cilindrada,combustivel,preço,ano,potência,caracteristicas)
+
+
+
+

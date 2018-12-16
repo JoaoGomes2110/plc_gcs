@@ -252,6 +252,7 @@ sistema : baseConhecimento {
                                System.out.println(i + "->" + $baseConhecimento.listaVeiculos.get(i).toString());
                             }
                            } 
+          '---' perguntas
         ;
 
 baseConhecimento returns [int totalVeiculos, HashMap<Integer,Carro>listaVeiculos]
@@ -379,6 +380,47 @@ tracao returns [String valorTracao]
        : 'dianteira' {$tracao.valorTracao = "dianteira";}
        | 'traseira' {$tracao.valorTracao = "traseira";}
        | 'integral' {$tracao.valorTracao = "integral";}
+       ;
+
+
+perguntas : (pergunta '?')+
+          ;
+
+pergunta : perguntaSingular
+         | perguntaPlural
+         ;
+
+perguntaSingular : '(' operadorSingular ',' palavraChave ')'
+                 ;
+
+perguntaPlural : '(' operadorPlural ',' '[' (palavraChave ',')+ ']' ')'
+               ;
+                 
+operadorSingular : 'Qual' 
+                 | 'Quanto'
+                 | 'Que'
+                 ;
+operadorPlural : 'Quais'
+               | 'Quantos'
+               ;
+
+palavraChave : 'segmento' segmento
+             | 'marca' marca
+             | 'modelo' modelo
+             | 'cilindrada' opcoes
+             | 'combustivel' combustivel
+             | 'preço' opcoes
+             | 'ano' opcoes
+             | 'potencia' opcoes
+             | 'cor' cor
+             | 'caixa' caixa
+             | 'portas' portas
+             | 'tracao' tracao
+             ;
+
+opcoes : '>' ',' NUM
+       | '<' ',' NUM
+       | '-+' ',' NUM ',' NUM
        ;
 
 

@@ -247,12 +247,15 @@ class Carro{
         }
 }
 
-sistema : baseConhecimento {
-                            for(Integer i : $baseConhecimento.listaVeiculos.keySet()){
-                               System.out.println(i + "->" + $baseConhecimento.listaVeiculos.get(i).toString());
+sistema returns [int totalVeiculos, HashMap<Integer,Carro> listaVeiculos]
+        : baseConhecimento {
+                            $sistema.totalVeiculos = $baseConhecimento.totalVeiculos;
+                            $sistema.listaVeiculos = $baseConhecimento.listaVeiculos;
+                            for(Integer i : $sistema.listaVeiculos.keySet()){
+                               System.out.println(i + "->" + $sistema.listaVeiculos.get(i).toString());
                             }
                            } 
-          '---' perguntas
+          '---' perguntas[$sistema.listaVeiculos]
         ;
 
 baseConhecimento returns [int totalVeiculos, HashMap<Integer,Carro>listaVeiculos]
@@ -383,44 +386,596 @@ tracao returns [String valorTracao]
        ;
 
 
-perguntas : (pergunta '?')+
+perguntas[HashMap<Integer,Carro>listaVeiculos] returns [String valorPergunta, String valorResposta]
+          : (pergunta[$perguntas.listaVeiculos] '?')+
           ;
 
-pergunta : perguntaSingular
-         | perguntaPlural
+pergunta [HashMap<Integar,Carro>listaVeiculos] returns [HashMap<Integer,Carro>listaRespostas, String valorPergunta, String valorResposta]
+@init{
+    $pergunta.valorResposta = "\n";
+}
+        : perguntaSingular[$pergunta.listaVeiculos] {
+                                                        $pergunta.listaRespostas = $perguntaSingular.listaRespostas;
+                                                        $pergunta.valorPergunta = $perguntaSingular.valorPergunta;
+                                                        
+                                                        for(Integer i : $pergunta.listaRespostas.keySet()){
+                                                            Carro car = $pergunta.listaRespostas.get(i);
+                                                            $pergunta.valorResposta = $pergunta.valorResposta + car.toString + "\n" + "***" + "\n";
+                                                        }
+                                                        
+                                                      }
+         | perguntaPlural[$pergunta.listaVeiculos] {
+                                                       $pergunta.listaRespostas = $perguntaPlural.listaRespostas;
+                                                       $pergunta.valorPergunta = $perguntaPlural.valorPergunta;
+                                                        
+                                                        for(Integer i : $pergunta.listaRespostas.keySet()){
+                                                            Carro car = $pergunta.listaRespostas.get(i);
+                                                            $pergunta.valorResposta = $pergunta.valorResposta + car.toString + "\n" + "***" + "\n";
+                                                        }
+                                                    
+                                                    }
          ;
 
-perguntaSingular : '(' operadorSingular ',' palavraChave ')'
+perguntaSingular[HashMap<Integer,Carro>listaVeiculos] returns [String valorOperadorSingular, String tipo, String valor, String op, int primeiro, int segundo, HashMap<Integer,Carro> listaRespostas, String valorPergunta]  
+@init{ $perguntaSingular.listaRespostas = new HashMap<Integer,Carro>();} 
+                   : '(' operadorSingular {$perguntaSingular.valorOperadorSingular = $operadorSingular.valorOperadorSingular;} 
+                   ',' '(' 
+                   palavraChave {$perguntaSingular.tipo = $palavraChave.tipo;
+                                 $perguntaSingular.valor = $palavraChave.valor;
+                                 $perguntaSingular.op = $palavraChave.op;
+                                 $perguntaSingular.primeiro = $palavraChave.primeiro;
+                                 $perguntaSingular.segundo = $palavraChave.segundo;
+                                 
+                                  for(Integer i : $perguntaSingular.listaVeiculos.keySet()){
+                                    Carro car = $perguntaSingular.listaVeiculos.get(i);
+                                    if($perguntaSingular.tipo.equals("segmento"){
+                                        if(car.getSegmento().equals($perguntaSingular.valor)){
+                                            $perguntaSingular.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaSingular.tipo.equals("marca"){
+                                        if(car.getMarca().equals($perguntaSingular.valor)){
+                                            $perguntaSingular.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaSingular.tipo.equals("modelo"){
+                                        if(car.getModelo().equals($perguntaSingular.valor)){
+                                            $perguntaSingular.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaSingular.tipo.equals("versao"){
+                                        if(car.getVersao().equals($perguntaSingular.valor)){
+                                            $perguntaSingular.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaSingular.tipo.equals("combustivel"){
+                                        if(car.getCombustivel().equals($perguntaSingular.valor)){
+                                            $perguntaSingular.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaSingular.tipo.equals("cor"){
+                                        if(car.getCaracteristica().getCor().equals($perguntaSingular.valor)){
+                                            $perguntaSingular.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaSingular.tipo.equals("caixa"){
+                                        if(car.getCaracteristica().getCaixa().equals($perguntaSingular.valor)){
+                                            $perguntaSingular.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaSingular.tipo.equals("portas"){
+                                        if(car.getCaracteristica().getPortas().equals($perguntaSingular.valor)){
+                                            $perguntaSingular.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaSingular.tipo.equals("tracao"){
+                                        if(car.getCaracteristica().getTracao().equals($perguntaSingular.valor)){
+                                            $perguntaSingular.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaSingular.tipo.equals("cilindrada"){
+                                        if($perguntaSingular.op.equals("maior")){
+                                            if(car.getCilindrada() > $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("menor")){
+                                            if(car.getCilindrada() < $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("igual")){
+                                            if(car.getCilindrada() == $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("entre")){
+                                            if(car.getCilindrada() > $perguntaSingular.primeiro && car.getCilindrada() < $perguntaSingular.segundo){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        } 
+                                    }
+                                    if($perguntaSingular.tipo.equals("preco"){
+                                        if($perguntaSingular.op.equals("maior")){
+                                            if(car.getPreco() > $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("menor")){
+                                            if(car.getPreco() < $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("igual")){
+                                            if(car.getPreco() == $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("entre")){
+                                            if(car.getPreco() > $perguntaSingular.primeiro && car.getPreco() < $perguntaSingular.segundo){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        } 
+                                    }
+                                    if($perguntaSingular.tipo.equals("ano"){
+                                        if($perguntaSingular.op.equals("maior")){
+                                            if(car.getAno() > $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("menor")){
+                                            if(car.getAno() < $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("igual")){
+                                            if(car.getAno() == $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("entre")){
+                                            if(car.getAno() > $perguntaSingular.primeiro && car.getAno() < $perguntaSingular.segundo){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        } 
+                                    }
+                                    if($perguntaSingular.tipo.equals("potencia"){
+                                        if($perguntaSingular.op.equals("maior")){
+                                            if(car.getPotencia() > $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("menor")){
+                                            if(car.getPotencia() < $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("igual")){
+                                            if(car.getPotencia() == $perguntaSingular.primeiro){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaSingular.op.equals("entre")){
+                                            if(car.getPotencia() > $perguntaSingular.primeiro && car.getPotencia() < $perguntaSingular.segundo){
+                                                $perguntaSingular.listaRespostas.put(i,car);
+                                            }
+                                        } 
+                                    }
+                                  }
+                                  
+                                  if($perguntaSingular.valorOperadorSingular.equals("Qual"){
+                                     if($perguntaSingular.tipo.equals("segmento") || $perguntaSingular.tipo.equals("marca") || $perguntaSingular.tipo.equals("modelo") || $perguntaSingular.tipo.equals("combustivel") || $perguntaSingular.tipo.equals("cor") || $perguntaSingular.tipo.equals("caixa") || $perguntaSingular.tipo.equals("portas") || $perguntaSingular.tipo.equals("tracao")){
+                                        $perguntaSingular.valorPergunta = "Qual é o carro cujo " + $perguntaSingular.tipo + " é " + $perguntaSingular.valor + " ?"; 
+                                     }else{
+                                        if($perguntaSingular.op.equals("maior") || $perguntaSingular.op.equals("menor")){
+                                            $perguntaSingular.valorPergunta = "Qual é o carro cujo " + $perguntaSingular.tipo + " é " + $perguntaSingular.op + " que " + $perguntaSingular.primeiro + " ?";
+                                        }
+                                        if($perguntaSingular.op.equals("entre")){
+                                            $perguntaSingular.valorPergunta = "Qual é o carro cujo " + $perguntaSingular.tipo + " é " + $perguntaSingular.op + " " + $perguntaSingular.primeiro + " e " + $perguntaSingular.primeiro + " ?";
+                                        }
+                                        if($perguntaSingular.op.equals("igual")){
+                                            $perguntaSingular.valorPergunta = "Qual é o carro cujo " + $perguntaSingular.tipo + " é " + $perguntaSingular.op + " a " + $perguntaSingular.primeiro + " ?";
+                                        }
+                                     }
+                                  }else if($perguntaSingular.valorOperadorSingular.equals("Quanto"){
+                                        $perguntaSingular.valorPergunta = "Quanto custa um veículo cujo " + $perguntaSingular.tipo + " seja " + $perguntaSingular.valor + " ?"; 
+                                  }
+                                   else if($perguntaSingular.valorOperadorSingular.equals("Que"){
+                                        if($perguntaSingular.tipo.equals("segmento") || $perguntaSingular.tipo.equals("marca") || $perguntaSingular.tipo.equals("modelo") || $perguntaSingular.tipo.equals("combustivel") || $perguntaSingular.tipo.equals("cor") || $perguntaSingular.tipo.equals("caixa") || $perguntaSingular.tipo.equals("portas") || $perguntaSingular.tipo.equals("tracao")){
+                                            $perguntaSingular.valorPergunta = "Que veículo tem como " + $perguntaSingular.tipo + " o valor de " + $perguntaSingular.valor + " ?"; 
+                                        }else{
+                                            if($perguntaSingular.op.equals("maior") || $perguntaSingular.op.equals("menor")){
+                                                $perguntaSingular.valorPergunta = "Que veículo tem como " + $perguntaSingular.tipo + " um valor " + $perguntaSingular.op + " que " + $perguntaSingular.primeiro + " ?";
+                                            }
+                                            if($perguntaSingular.op.equals("entre")){
+                                                $perguntaSingular.valorPergunta = "Que veículo tem como " + $perguntaSingular.tipo + " um valor " + $perguntaSingular.op + " " + $perguntaSingular.primeiro + " e " + $perguntaSingular.primeiro + " ?";
+                                            }
+                                            if($perguntaSingular.op.equals("igual")){
+                                                $perguntaSingular.valorPergunta = "Que veículo tem como " + $perguntaSingular.tipo + " um valor " + $perguntaSingular.op + " a " + $perguntaSingular.primeiro + " ?";
+                                            }
+                                        }
+                                  }    
+                                 } 
+                    ')' ')'
                  ;
 
-perguntaPlural : '(' operadorPlural ',' '[' (palavraChave ',')+ ']' ')'
+perguntaPlural[HashMap<Integer,Carro>listaVeiculos] returns [String valorOperadorPlural, String tipo, String valor, String op, int primeiro, int segundo, HashMap<Integer,Carro> listaRespostas, String valorPergunta]
+@init{
+    int total = 0;
+    $perguntaPlural.listaRespostas = new HashMap<Integer,Carro>();
+}
+               : '(' operadorPlural {
+                                     $perguntaPlural.valorOperadorPlural = $operadorPlural.valorOperadorPlural;
+                                     if($perguntaPlural.valorOperadorPlural.equals("Quais"){
+                                        $perguntaPlural.valorPergunta = "Quais são os veículos cujo " ;
+                                     }
+                                     if($perguntaPlural.valorOperadorPlural.equals("Quantos"){
+                                        $perguntaPlural.valorPergunta = "Quantos veículos tem como " ;
+                                     }
+                                    }
+                                    
+                  ',' '[' ('(' 
+                  palavraChave {
+                                 $perguntaPlural.tipo = $palavraChave.tipo;
+                                 $perguntaPlural.valor = $palavraChave.valor;
+                                 $perguntaPlural.op = $palavraChave.op;
+                                 $perguntaPlural.primeiro = $palavraChave.primeiro;
+                                 $perguntaPlural.segundo = $palavraChave.segundo;
+                                 
+                                if(total == 0){
+                                 
+                                  for(Integer i : $perguntaPlural.listaVeiculos.keySet()){
+                                    Carro car = $perguntaPlural.listaVeiculos.get(i);
+                                    if($perguntaPlural.tipo.equals("segmento"){
+                                        if(car.getSegmento().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("marca"){
+                                        if(car.getMarca().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("modelo"){
+                                        if(car.getModelo().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("versao"){
+                                        if(car.getVersao().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("combustivel"){
+                                        if(car.getCombustivel().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("cor"){
+                                        if(car.getCaracteristica().getCor().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("caixa"){
+                                        if(car.getCaracteristica().getCaixa().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("portas"){
+                                        if(car.getCaracteristica().getPortas().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("tracao"){
+                                        if(car.getCaracteristica().getTracao().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.put(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("cilindrada"){
+                                        if($perguntaPlural.op.equals("maior")){
+                                            if(car.getCilindrada() > $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("menor")){
+                                            if(car.getCilindrada() < $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("igual")){
+                                            if(car.getCilindrada() == $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("entre")){
+                                            if(car.getCilindrada() > $perguntaPlural.primeiro && car.getCilindrada() < $perguntaPlural.segundo){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        } 
+                                    }
+                                    if($perguntaPlural.tipo.equals("preco"){
+                                        if($perguntaPlural.op.equals("maior")){
+                                            if(car.getPreco() > $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("menor")){
+                                            if(car.getPreco() < $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("igual")){
+                                            if(car.getPreco() == $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("entre")){
+                                            if(car.getPreco() > $perguntaPlural.primeiro && car.getPreco() < $perguntaPlural.segundo){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        } 
+                                    }
+                                    if($perguntaPlural.tipo.equals("ano"){
+                                        if($perguntaPlural.op.equals("maior")){
+                                            if(car.getAno() > $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("menor")){
+                                            if(car.getAno() < $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("igual")){
+                                            if(car.getAno() == $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("entre")){
+                                            if(car.getAno() > $perguntaPlural.primeiro && car.getAno() < $perguntaPlural.segundo){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        } 
+                                    }
+                                    if($perguntaPlural.tipo.equals("potencia"){
+                                        if($perguntaPlural.op.equals("maior")){
+                                            if(car.getPotencia() > $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("menor")){
+                                            if(car.getPotencia() < $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("igual")){
+                                            if(car.getPotencia() == $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("entre")){
+                                            if(car.getPotencia() > $perguntaPlural.primeiro && car.getPotencia() < $perguntaPlural.segundo){
+                                                $perguntaPlural.listaRespostas.put(i,car);
+                                            }
+                                        } 
+                                    }
+                                  }
+
+
+                                    if($perguntaPlural.tipo.equals("segmento") || $perguntaPlural.tipo.equals("marca") || $perguntaPlural.tipo.equals("modelo") || $perguntaPlural.tipo.equals("combustivel") || $perguntaPlural.tipo.equals("cor") || $perguntaPlural.tipo.equals("caixa") || $perguntaPlural.tipo.equals("portas") || $perguntaPlural.tipo.equals("tracao")){
+                                            if($perguntaPlural.valorOperadorPlural.equals("Quais")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + $perguntaPlural.tipo + " é " + $perguntaPlural.valor;}
+                                            if($perguntaPlural.valorOperadorPlural.equals("Quantos")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + $perguntaPlural.tipo +  " o valor de  " + $perguntaPlural.valor;}
+                                        }else{
+                                            if($perguntaPlural.op.equals("maior") || $perguntaPlural.op.equals("menor")){
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quais")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + $perguntaPlural.tipo + " é " + $perguntaPlural.op + " que " + $perguntaPlural.primeiro+;}
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quantos")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + $perguntaPlural.tipo +  " um valor " + $perguntaPlural.op  + " que " + $perguntaPlural.primeiro ;}
+                                            }
+                                            if($perguntaPlural.op.equals("entre")){
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quais")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + $perguntaPlural.tipo + " é um valor " + $perguntaPlural.op + " " + $perguntaPlural.primeiro + " e " + $perguntaPlural.segundo;}
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quantos")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + $perguntaPlural.tipo +  " um valor " + $perguntaPlural.op  + " " + $perguntaPlural.primeiro + " e " + $perguntaPlural.segundo ;}
+                                            }
+                                            if($perguntaPlural.op.equals("igual")){
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quais")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + $perguntaPlural.tipo + " é um valor" + $perguntaPlural.op + " a " + $perguntaPlural.primeiro ;}
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quantos")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + $perguntaPlural.tipo +  " um valor " + $perguntaPlural.op  + " a " + $perguntaPlural.primeiro;}  
+                                            }
+                                        }
+                                    
+                                    total++;
+                                }else{
+                                    
+                                   for(Integer i : $perguntaPlural.listaRespostas.keySet()){
+                                    Carro car = $perguntaPlural.listaRespostas.get(i);
+                                    if($perguntaPlural.tipo.equals("segmento"){
+                                        if(!car.getSegmento().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.remove(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("marca"){
+                                        if(!car.getMarca().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.remove(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("modelo"){
+                                        if(!car.getModelo().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.remove(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("versao"){
+                                        if(!car.getVersao().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.remove(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("combustivel"){
+                                        if(!car.getCombustivel().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.remove(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("cor"){
+                                        if(!car.getCaracteristica().getCor().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.remove(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("caixa"){
+                                        if(!car.getCaracteristica().getCaixa().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.remove(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("portas"){
+                                        if(!car.getCaracteristica().getPortas().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.remove(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("tracao"){
+                                        if(!car.getCaracteristica().getTracao().equals($perguntaPlural.valor)){
+                                            $perguntaPlural.listaRespostas.remove(i,car);
+                                        }
+                                    }
+                                    if($perguntaPlural.tipo.equals("cilindrada"){
+                                        if($perguntaPlural.op.equals("maior")){
+                                            if(!car.getCilindrada() > $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("menor")){
+                                            if(!car.getCilindrada() < $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("igual")){
+                                            if(!car.getCilindrada() == $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("entre")){
+                                            if(!car.getCilindrada() > $perguntaPlural.primeiro && car.getCilindrada() < $perguntaPlural.segundo){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        } 
+                                    }
+                                    if($perguntaPlural.tipo.equals("preco"){
+                                        if($perguntaPlural.op.equals("maior")){
+                                            if(!car.getPreco() > $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("menor")){
+                                            if(!car.getPreco() < $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("igual")){
+                                            if(!car.getPreco() == $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("entre")){
+                                            if(!car.getPreco() > $perguntaPlural.primeiro && car.getPreco() < $perguntaPlural.segundo){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        } 
+                                    }
+                                    if($perguntaPlural.tipo.equals("ano"){
+                                        if($perguntaPlural.op.equals("maior")){
+                                            if(!car.getAno() > $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("menor")){
+                                            if(!car.getAno() < $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("igual")){
+                                            if(!car.getAno() == $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("entre")){
+                                            if(!car.getAno() > $perguntaPlural.primeiro && car.getAno() < $perguntaPlural.segundo){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        } 
+                                    }
+                                    if($perguntaPlural.tipo.equals("potencia"){
+                                        if($perguntaPlural.op.equals("maior")){
+                                            if(!car.getPotencia() > $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("menor")){
+                                            if(!car.getPotencia() < $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("igual")){
+                                            if(!car.getPotencia() == $perguntaPlural.primeiro){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        }
+                                        else if ($perguntaPlural.op.equals("entre")){
+                                            if(!car.getPotencia() > $perguntaPlural.primeiro && car.getPotencia() < $perguntaPlural.segundo){
+                                                $perguntaPlural.listaRespostas.remove(i,car);
+                                            }
+                                        } 
+                                    }
+                                  }
+
+
+                                    if($perguntaPlural.tipo.equals("segmento") || $perguntaPlural.tipo.equals("marca") || $perguntaPlural.tipo.equals("modelo") || $perguntaPlural.tipo.equals("combustivel") || $perguntaPlural.tipo.equals("cor") || $perguntaPlural.tipo.equals("caixa") || $perguntaPlural.tipo.equals("portas") || $perguntaPlural.tipo.equals("tracao")){
+                                            if($perguntaPlural.valorOperadorPlural.equals("Quais")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + " , e ainda  cujo " + $perguntaPlural.tipo + " é " + $perguntaPlural.valor;}
+                                            if($perguntaPlural.valorOperadorPlural.equals("Quantos")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + " , e ainda tem como " + $perguntaPlural.tipo +  " o valor de  " + $perguntaPlural.valor;}
+                                        }else{
+                                            if($perguntaPlural.op.equals("maior") || $perguntaPlural.op.equals("menor")){
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quais")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + " , e ainda  cujo " + $perguntaPlural.tipo + " é " + $perguntaPlural.op + " que " + $perguntaPlural.primeiro;}
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quantos")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + " , e ainda tem como " + $perguntaPlural.tipo +  " um valor " + $perguntaPlural.op  + " que " + $perguntaPlural.primeiro;}
+                                            }
+                                            if($perguntaPlural.op.equals("entre")){
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quais")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + " , e ainda  cujo " + $perguntaPlural.tipo + " é um valor " + $perguntaPlural.op + " " + $perguntaPlural.primeiro + " e " + $perguntaPlural.segundo;}
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quantos")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + " , e ainda tem como " + $perguntaPlural.tipo +  " um valor " + $perguntaPlural.op  + " " + $perguntaPlural.primeiro + " e " + $perguntaPlural.segundo ;}
+                                            }
+                                            if($perguntaPlural.op.equals("igual")){
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quais")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta +  " , e ainda  cujo " + $perguntaPlural.tipo + " é um valor" + $perguntaPlural.op + " a " + $perguntaPlural.primeiro + " , e ainda ";}
+                                                if($perguntaPlural.valorOperadorPlural.equals("Quantos")){$perguntaPlural.valorPergunta = $perguntaPlural.valorPergunta + " , e ainda tem como " + $perguntaPlural.tipo +  " um valor " + $perguntaPlural.op  + " a " + $perguntaPlural.primeiro + " , e ainda ";}  
+                                            }
+                                        }
+                                }
+
+                               }
+                  ')' ',')+ 
+                  ']' ')' {$perguntaPlural.valorOperadorPlural = $perguntaPlural.valorOperadorPlural + " ?";}
                ;
                  
-operadorSingular : 'Qual' 
-                 | 'Quanto'
-                 | 'Que'
+operadorSingular returns [String valorOperadorSingular]
+                 : 'Qual' {$operadorSingular.valorOperadorSingular = "Qual";}
+                 | 'Quanto' {$operadorSingular.valorOperadorSingular = "Quanto";}
+                 | 'Que' {$operadorSingular.valorOperadorSingular = "Que";}
                  ;
-operadorPlural : 'Quais'
-               | 'Quantos'
+
+operadorPlural returns [String valorOperadorPlural]
+               : 'Quais' {$operadorPlural.valorOperadorPlural = "Quais";}
+               | 'Quantos' {$operadorPlural.valorOperadorPlural = "Quantos";}
                ;
 
-palavraChave : 'segmento' segmento
-             | 'marca' marca
-             | 'modelo' modelo
-             | 'cilindrada' opcoes
-             | 'combustivel' combustivel
-             | 'preço' opcoes
-             | 'ano' opcoes
-             | 'potencia' opcoes
-             | 'cor' cor
-             | 'caixa' caixa
-             | 'portas' portas
-             | 'tracao' tracao
+palavraChave returns [String tipo, String valor, String op, int primeiro, int segundo]
+             : 'segmento' ',' segmento {$palavraChave.tipo = "segmento"; $palavraChave.valor = $segmento.valorSegmento; $palavraChave.op = "vazio"; $palavraChave.primeiro = -1; $palavraChave.segundo = -2;}
+             | 'marca' ',' marca {$palavraChave.tipo = "marca"; $palavraChave.valor = $marca.valorMarca; $palavraChave.op = "vazio"; $palavraChave.primeiro = -1; $palavraChave.segundo = -2;}
+             | 'modelo' ',' modelo {$palavraChave.tipo = "modelo"; $palavraChave.valor = $modelo.valorModelo; $palavraChave.op = "vazio"; $palavraChave.primeiro = -1; $palavraChave.segundo = -2;}
+             | 'cilindrada' ',' opcoes {$palavraChave.tipo = "cilindrada"; $palavraChave.valor = "vazio" ; $palavraChave.op = $opcoes.op; $palavraChave.primeiro = $opcoes.primeiro; $palavraChave.segundo = $opcoes.segundo;}
+             | 'combustivel' ',' combustivel {$palavraChave.tipo = "combustivel"; $palavraChave.valor = $combustivel.valorCombustivel; $palavraChave.op = "vazio"; $palavraChave.primeiro = -1; $palavraChave.segundo = -2;}
+             | 'preco' ',' opcoes {$palavraChave.tipo = "preco"; $palavraChave.valor = "vazio" ; $palavraChave.op = $opcoes.op; $palavraChave.primeiro = $opcoes.primeiro; $palavraChave.segundo = $opcoes.segundo;}
+             | 'ano' ',' opcoes {$palavraChave.tipo = "ano"; $palavraChave.valor = "vazio" ; $palavraChave.op = $opcoes.op; $palavraChave.primeiro = $opcoes.primeiro; $palavraChave.segundo = $opcoes.segundo;}
+             | 'potencia' ',' opcoes {$palavraChave.tipo = "potencia"; $palavraChave.valor = "vazio" ; $palavraChave.op = $opcoes.op; $palavraChave.primeiro = $opcoes.primeiro; $palavraChave.segundo = $opcoes.segundo;}
+             | 'cor' ',' cor {$palavraChave.tipo = "cor"; $palavraChave.valor = $cor.valorCor; $palavraChave.op = "vazio"; $palavraChave.primeiro = -1; $palavraChave.segundo = -2;}
+             | 'caixa' ',' caixa {$palavraChave.tipo = "caixa"; $palavraChave.valor = $caixa.valorCaixa; $palavraChave.op = "vazio"; $palavraChave.primeiro = -1; $palavraChave.segundo = -2;}
+             | 'portas' ',' portas {$palavraChave.tipo = "portas"; $palavraChave.valor = $portas.valorPortas; $palavraChave.op = "vazio"; $palavraChave.primeiro = -1; $palavraChave.segundo = -2;}
+             | 'tracao' ',' tracao {$palavraChave.tipo = "tracao"; $palavraChave.valor = $tracao.valorTracao; $palavraChave.op = "vazio"; $palavraChave.primeiro = -1; $palavraChave.segundo = -2;}
              ;
 
-opcoes : '>' ',' NUM
-       | '<' ',' NUM
-       | '-+' ',' NUM ',' NUM
+opcoes returns [String op, int primeiro, int segundo]
+       : '(' '>' ',' NUM {$opcoes.op = "maior"; $opcoes.primeiro = $NUM.int; $opcoes.segundo = -1;} ')'
+       | '(' '<' ',' NUM {$opcoes.op = "menor"; $opcoes.primeiro = $NUM.int; $opcoes.segundo = -1;} ')'
+       | '(' '-+' ',' NUM {$opcoes.primeiro = $NUM.int;} ',' NUM {$opcoes.segundo = $NUM.int; $opcoes.op = "entre";} ')'
+       | '(' '=' ',' NUM {$opcoes.op = "igual"; $opcoes.primeiro = $NUM.int; $opcoes.segundo = -1;} ')'
        ;
 
 

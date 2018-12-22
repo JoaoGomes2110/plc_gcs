@@ -1,5 +1,10 @@
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 75, branco, manual, 4-5, dianteira);
-(pequeno citadino, blblbs, twingo, 0.9 TCE, 900, gasolina, 9500, 2017, 75, azul, manual, 4-5, dianteira);
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 75, vermelho, manual, 4-5, dianteira);
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 75, preto, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 90, branco, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9500, 2017, 90, azul, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 90, vermelho, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 90, preto, manual, 4-5, dianteira);
 (pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9000, 2017, 75, cinza escuro, manual, 4-5, dianteira);
+
+---
+
+(Qual,(segmento,pequeno citadino))?
+(Qual,(sasgm,pequeno))?

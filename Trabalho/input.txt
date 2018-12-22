@@ -1,13 +1,13 @@
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 75, branco, manual, 4-5, dianteira);
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9500, 2017, 75, azul, manual, 4-5, dianteira);
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 75, vermelho, manual, 4-5, dianteira);
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 75, preto, manual, 4-5, dianteira);
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9000, 2017, 75, cinza escuro, manual, 4-5, dianteira);
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 8500, 2014, 75, branco, manual, 4-5, dianteira);
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9000, 2015, 75, azul, manual, 4-5, dianteira);
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9200, 2016, 75, vermelho, manual, 4-5, dianteira);
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 75, preto, manual, 4-5, dianteira);
-(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9500, 2017, 75, cinza claro, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 90, branco, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9500, 2017, 90, azul, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 90, vermelho, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 90, preto, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9000, 2017, 90, cinza escuro, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 8500, 2014, 90, branco, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9000, 2015, 90, azul, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9200, 2016, 90, vermelho, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 90, preto, manual, 4-5, dianteira);
+(pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9500, 2017, 90, cinza claro, manual, 4-5, dianteira);
 
 (citadino, renault, clio, 0.9 TCE, 900, gasolina, 15000, 2018, 90, preto, manual, 4-5, dianteira);
 (citadino, renault, clio, 0.9 TCE, 900, gasolina, 14000, 2017, 90, azul, manual, 4-5, dianteira);
@@ -32,11 +32,11 @@
 (citadino, renault, clio, RS 220, 1800, gasolina, 38000, 2018, 220, amarelo, semi, 4-5, dianteira);
 (citadino, renault, clio, RS 220, 1800, gasolina, 37000, 2018, 220, preto, semi, 4-5, dianteira);
 
-(utilitario, renault, megane, 1.2 TCE, 1200, gasolina, 15000, 2018, 90, preto, manual, 4-5, traseira);
-(utilitario, renault, megane, 1.2 TCE, 1200, gasolina, 14000, 2017, 90, azul, manual, 4-5, traseira);
-(utilitario, renault, megane, 1.2 TCE, 1200, gasolina, 13000, 2016, 90, branco, manual, 4-5, traseira);
-(utilitario, renault, megane, 1.2 TCE, 1200, gasolina, 12000, 2015, 90, cinza claro, manual, 4-5, traseira);
-(utilitario, renault, megane, 1.2 TCE, 1200, gasolina, 11000, 2014, 90, cinza escuro, manual, 4-5, traseira);
+(utilitario, renault, megane, 1.2 TCE, 1200, gasolina, 15000, 2018, 95, preto, manual, 4-5, traseira);
+(utilitario, renault, megane, 1.2 TCE, 1200, gasolina, 14000, 2017, 95, azul, manual, 4-5, traseira);
+(utilitario, renault, megane, 1.2 TCE, 1200, gasolina, 13000, 2016, 95, branco, manual, 4-5, traseira);
+(utilitario, renault, megane, 1.2 TCE, 1200, gasolina, 12000, 2015, 95, cinza claro, manual, 4-5, traseira);
+(utilitario, renault, megane, 1.2 TCE, 1200, gasolina, 11000, 2014, 95, cinza escuro, manual, 4-5, traseira);
 (utilitario, renault, megane, 1.5 DCI, 1500, gasoleo, 20000, 2018, 90, preto, manual, 4-5, traseira);
 (utilitario, renault, megane, 1.5 DCI, 1500, gasoleo, 19000, 2017, 90, branco, manual, 4-5, traseira);
 (utilitario, renault, megane, 1.5 DCI, 1500, gasoleo, 18000, 2016, 90, cinza escuro, manual, 4-5, traseira);

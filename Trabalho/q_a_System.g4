@@ -255,7 +255,6 @@ sistema returns [int totalVeiculos, HashMap<Integer,Carro> listaVeiculos]
                             $sistema.listaVeiculos = $baseConhecimento.listaVeiculos;
                             System.out.println("\n");
                             System.out.println("******************** Base de Dados ***********************");
-                            File file = new File("~/Desktop/teste.txt"); System.out.println("Ficheiro criado");
                             for(Integer i : $sistema.listaVeiculos.keySet()){
                                System.out.println(i + "->" + $sistema.listaVeiculos.get(i).toString());
                             }
@@ -325,78 +324,127 @@ marca returns [String valorMarca]
 
 modelo[String valorSegmento,String valorMarca] returns [String valorModelo]
        : 'twingo' {
-                   if(valorMarca.equals("renault") || valorSegmento.equals("pequeno citadino")){
-                    $modelo.valorModelo = "twingo";
-                   }else{
+                   if(valorMarca.equals("renault")){ 
+                     if(valorSegmento.equals("pequeno citadino")){
+                       $modelo.valorModelo = "twingo";
+                     }else{
+                        $modelo.valorModelo = "erroModelo";
+                     }
+                   }
+                   else{
                     $modelo.valorModelo = "erroModelo";
                    }
                   }
        | 'clio' {
-                 if(valorMarca.equals("renault") || valorSegmento.equals("citadino")){
-                    $modelo.valorModelo = "clio";
-                 }else{
+                 if(valorMarca.equals("renault")){
+                   if(valorSegmento.equals("citadino")){
+                     $modelo.valorModelo = "clio";
+                   }
+                   else{
+                    $modelo.valorModelo = "erroModelo";
+                   }
+                 }
+                 else{
                     $modelo.valorModelo = "erroModelo";
                  }
                 }
        | 'megane' {
-                   if(valorMarca.equals("renault") || valorSegmento.equals("utilitario")){
-                    $modelo.valorModelo = "megane";
-                   }else{
+                   if(valorMarca.equals("renault")){
+                     if(valorSegmento.equals("utilitario")){
+                        $modelo.valorModelo = "megane";
+                     }
+                     else{
+                        $modelo.valorModelo = "erroModelo";
+                     }
+                   }
+                   else{
                     $modelo.valorModelo = "erroModelo";
                    }
                   }
        | 'talisman' {
-                     if(valorMarca.equals("renault") || valorSegmento.equals("sedan")){
+                     if(valorMarca.equals("renault")){
+                       if(valorSegmento.equals("sedan")){
                         $modelo.valorModelo = "talisman";
-                     }else{
+                       }else{
+                        $modelo.valorModelo = "erroModelo";
+                       }
+                     }
+                     else{
                         $modelo.valorModelo = "erroModelo";
                      }
                     }
        | 'kangoo' {
-                   if(valorMarca.equals("renault") || valorSegmento.equals("comercial")){
-                    $modelo.valorModelo = "kangoo";
+                   if(valorMarca.equals("renault")){
+                     if(valorSegmento.equals("comercial")){
+                        $modelo.valorModelo = "kangoo";
+                     }else{
+                        $modelo.valorModelo = "erroModelo";
+                     }
                    }else{
                         $modelo.valorModelo = "erroModelo";
                    }
                   }
        | 'espace' {
-                   if(valorMarca.equals("renault") || valorSegmento.equals("monovolume")){
-                    $modelo.valorModelo = "espace";
+                   if(valorMarca.equals("renault")){
+                     if(valorSegmento.equals("monovolume")){
+                        $modelo.valorModelo = "espace";
+                     }
                    }else{
                         $modelo.valorModelo = "erroModelo";
                    }
                   }
        | 'captur' {
-                   if(valorMarca.equals("renault") || valorSegmento.equals("suv")){
-                    $modelo.valorModelo = "captur";
+                   if(valorMarca.equals("renault")){
+                     if(valorSegmento.equals("suv")){
+                        $modelo.valorModelo = "captur";
+                     }else{
+                        $modelo.valorModelo = "erroModelo";
+                     }
                    }else{
                         $modelo.valorModelo = "erroModelo";
                    }
                   }
        | 'laguna' {
-                   if(valorMarca.equals("renault") || valorSegmento.equals("coupe")){
-                    $modelo.valorModelo = "laguna";
+                   if(valorMarca.equals("renault")){
+                     if(valorSegmento.equals("coupe")){
+                        $modelo.valorModelo = "laguna";
+                     }
+                     else{
+                        $modelo.valorModelo = "erroModelo";
+                     }
                    }else{
                         $modelo.valorModelo = "erroModelo";
                    }
                   }
        | 'zoe' {
-                if(valorMarca.equals("renault") || valorSegmento.equals("eletrico")){
-                  $modelo.valorModelo = "zoe";
+                if(valorMarca.equals("renault")){
+                  if(valorSegmento.equals("eletrico")){
+                    $modelo.valorModelo = "zoe";
+                  }else{
+                    $modelo.valorModelo = "erroModelo";
+                  }
                 }else{
-                        $modelo.valorModelo = "erroModelo";
+                    $modelo.valorModelo = "erroModelo";
                 }
                }
        | 'duster' {
-                   if(valorMarca.equals("dacia") || valorSegmento.equals("suv")){
-                     $modelo.valorModelo = "duster";
+                   if(valorMarca.equals("dacia")){
+                     if(valorSegmento.equals("suv")){
+                        $modelo.valorModelo = "duster";
+                     }else{
+                        $modelo.valorModelo = "erroModelo";
+                     }
                    }else{
                         $modelo.valorModelo = "erroModelo";
                    }
                   }
        | 'sandero' {
-                    if(valorMarca.equals("dacia") || valorSegmento.equals("citadino")){
-                     $modelo.valorModelo = "sandero";
+                    if(valorMarca.equals("dacia")){
+                      if(valorSegmento.equals("citadino")){
+                        $modelo.valorModelo = "sandero";
+                      }else{
+                        $modelo.valorModelo = "erroModelo";
+                      }
                     }else{
                         $modelo.valorModelo = "erroModelo";
                     }
@@ -485,7 +533,7 @@ potencia[String valorVersao] returns [int valorPotencia]
            $potencia.valorPotencia = $NUM.int;
            if(valorVersao.equals("0.9 TCE")){if($potencia.valorPotencia != 90){$potencia.valorPotencia = -1;}}
            else if(valorVersao.equals("1.2 TCE")){if($potencia.valorPotencia != 95){$potencia.valorPotencia = -1;}}
-           else if(valorVersao.equals("1.5 DCI")){if($potencia.valorPotencia != 90 || $potencia.valorPotencia != 110){$potencia.valorPotencia = -1;}}
+           else if(valorVersao.equals("1.5 DCI")){if($potencia.valorPotencia != 90){if($potencia.valorPotencia != 110)$potencia.valorPotencia = -1;}}
            else if(valorVersao.equals("1.6 DCI")){if($potencia.valorPotencia != 135){$potencia.valorPotencia = -1;}}
            else if(valorVersao.equals("RS 200")){if($potencia.valorPotencia != 200){$potencia.valorPotencia = -1;}}
            else if(valorVersao.equals("RS 220")){if($potencia.valorPotencia!= 220){$potencia.valorPotencia = -1;}}

@@ -1,16 +1,16 @@
 (pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 10000, 2018, 90, branco, manual, 4-5, dianteira);
 (pequeno citadino, renault, twingo, 0.9 TCE, 900, gasolina, 9500, 2017, 90, azul, manual, 4-5, dianteira);
-(citadino, renault, clio, 0.9 TCE, 900, gasolina, 15000, 2018, 90, preto, manual, 4-5, dianteira);
+(citadino, dacia, clio, 0.9 TCE, 900, gasolina, 15000, 2018, 90, preto, manual, 4-5, dianteira);
 (citadino, renault, clio, 1.5 DCI, 1500, gasoleo, 18000, 2016, 90, cinza escuro, manual, 4-5, dianteira);
 (citadino, renault, clio, RS 200, 1600, gasolina, 35000, 2018, 200, amarelo, semi, 4-5, dianteira);
-(utilitario, renault, megane, 1.2 TCE, 1200, gasolina, 15000, 2018, 95, preto, manual, 4-5, traseira);
+(utilitario, renault, megane, 1.2 TCE, 1200, gasoleo, 15000, 2018, 95, preto, manual, 4-5, traseira);
 (utilitario, renault, megane, 1.5 DCI, 1500, gasoleo, 18000, 2016, 110, cinza escuro, manual, 4-5, traseira);
 (sedan, renault, talisman, 1.6 DCI, 1600, gasoleo, 36000, 2018, 135, preto, manual, 4-5, traseira);
 
 ---
 
-(Qual,(modelo,clio))?
-(Quais,[(segmento,sedan),(preco,(>,15000))])?
+(Porque,(segmento,citadino))?
+
 
 
 
